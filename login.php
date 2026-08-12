@@ -1,5 +1,6 @@
 <?php
 session_start();
+// التوجيه إلى صفحة Login
 
 require_once 'Database.php';
 require_once 'Model.php';
@@ -18,7 +19,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $result = $user->login($email, $password);
 
     $message = $result['message'];
-    $success = $result['success'];
+       // لو التسجيل نجح
+    if ($success) {
+        header('Location: login.php');
+        exit;
+    }
 }
 
 ?>
@@ -48,6 +53,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
         <button type="submit">Login</button>
+
+<p>
+    Don't have an account?
+</p>
+
+<a href="register.php" class="register-btn">
+    Register
+</a>
 
         <?php if ($message): ?>
             <div class="<?= $success ? 'success' : 'error' ?>">
@@ -149,5 +162,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     color: #dc3545;
     background: #f8d7da;
     border-radius: 7px;
+}
+.register-btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+
+    background: #222;
+    color: white;
+
+    text-align: center;
+    text-decoration: none;
+
+    border-radius: 7px;
+    font-size: 16px;
+}
+
+.register-btn:hover {
+    background: #444;
 }
 </style>
