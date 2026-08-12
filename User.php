@@ -1,5 +1,6 @@
 <?php
 
+
 class User extends Model
 {
     public function register($username, $email, $password): array
@@ -52,14 +53,14 @@ class User extends Model
         }
     }
     
-public function login($username, $password): array
+public function login($email, $password): array
 {
     $stmt = $this->db->prepare(
-        "SELECT * FROM users WHERE username = :username"
+        "SELECT * FROM users WHERE email = :email"
     );
 
     $stmt->execute([
-        'username' => $username
+        'email' => $email
     ]);
 
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -67,16 +68,18 @@ public function login($username, $password): array
     if (!$user) {
         return [
             'success' => false,
-            'message' => 'Invalid username or password'
+            'message' => 'Invalid email or password'
         ];
     }
 
     if (!password_verify($password, $user['password'])) {
         return [
             'success' => false,
-            'message' => 'Invalid username or password'
+            'message' => 'Invalid email or password'
         ];
     }
+
+$_SESSION['user_id'] = $user['id'];
 
     return [
         'success' => true,
