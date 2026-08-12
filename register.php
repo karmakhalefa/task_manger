@@ -5,8 +5,7 @@ require_once 'Model.php';
 require_once 'User.php';
 
 $message = '';
-$message = '';
-
+$success = false;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -20,8 +19,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $message = $result['message'];
     $success = $result['success'];
-}
 
+    // لو التسجيل نجح
+    if ($success) {
+        header('Location: login.php');
+        exit;
+    }
+}
 
 ?>
 
@@ -32,7 +36,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Register</title>
 </head>
 <body>
+    <div class="navigation_bar">
+<div class="navigation">
 
+    <a href="login.php" class="nav-btn">
+        Login
+    </a>
+
+
+</div>
 <div class="register-box">
 
     <h2>Register</h2>
@@ -55,6 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
         <button type="submit">Register</button>
+    
 
         <?php if ($message): ?>
             <div class="<?= $success ? 'success' : 'error' ?>">
@@ -65,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
 
 </div>
-
+</div>
 </body>
 </html>
 <style>
@@ -83,6 +96,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         align-items: center;
         min-height: 100vh;
     }
+    .navigation{
+            display: flex;
+    gap: 12px;
+    }
+.navigation_bar{
+        display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:50px;
+}
+.nav-btn{
+        padding: 10px 50px;
+    background-color: darkorchid;
+}
 
     .register-box {
         width: 400px;

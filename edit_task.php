@@ -9,38 +9,46 @@ require_once 'Task.php';
 $message = '';
 $success = false;
 
-// لازم المستخدم يكون عامل Login
+
+// 1. لازم يكون عامل Login
 if (!isset($_SESSION['user_id'])) {
     die('You must login first');
 }
 
+
+// 2. ID المستخدم من Session
 $userId = $_SESSION['user_id'];
 
-// هات ID المهمة من الرابط
+
+// 3. ID المهمة من الرابط
 $id = $_GET['id'] ?? null;
 
 if (!$id) {
     die('Task ID is required');
 }
 
+
+// 4. إنشاء object من Task
 $taskModel = new Task();
 
-// هات المهمة
+
+// 5. هات المهمة وتأكد إنها تخص المستخدم
 $task = $taskModel->getById($id, $userId);
 
-// لو المهمة مش موجودة أو مش بتاعة المستخدم
 if (!$task) {
     die('Task not found');
 }
 
 
-// لو الفورم اتبعت
+// 6. لو المستخدم ضغط Update
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $title = $_POST['title'];
     $description = $_POST['description'];
     $status = $_POST['status'];
 
+
+    // 7. تعديل المهمة
     $result = $taskModel->update(
         $id,
         $userId,
@@ -48,6 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $description,
         $status
     );
+
 
     if ($result) {
 
@@ -78,13 +87,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body>
 
-<div class="task-box">
+<div class="edit-box">
 
     <h2>Edit Task</h2>
 
-    <form method="POST">
 
-        <!-- Title -->
+    <form method="POST">
 
         <div class="form-group">
 
@@ -100,8 +108,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
 
-        <!-- Description -->
-
         <div class="form-group">
 
             <label>Description</label>
@@ -113,8 +119,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         </div>
 
-
-        <!-- Status -->
 
         <div class="form-group">
 
@@ -130,17 +134,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </option>
 
                 <option
-                    value="in_progress"
-                    <?= $task['status'] === 'in_progress' ? 'selected' : '' ?>
+                    value="completed"
+                    <?= $task['status'] === 'completed' ? 'selected' : '' ?>
                 >
-                    In Progress
-                </option>
-
-                <option
-                    value="done"
-                    <?= $task['status'] === 'done' ? 'selected' : '' ?>
-                >
-                    Done
+                    Completed
                 </option>
 
             </select>
@@ -151,6 +148,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button type="submit">
             Update Task
         </button>
+
+
+        <a href="index.php" class="back">
+            Back to Tasks
+        </a>
 
 
         <?php if ($message): ?>
