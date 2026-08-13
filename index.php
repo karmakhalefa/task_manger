@@ -39,7 +39,7 @@ $tasks = $task->getAllByUser($userId);
         + Add New Task
     </a>
 
-
+   
     <?php if (empty($tasks)): ?>
 
         <div class="no-tasks">
@@ -87,7 +87,9 @@ $tasks = $task->getAllByUser($userId);
         <?php endforeach; ?>
 
     <?php endif; ?>
-
+ <a href="login.php" class="add-task">
+       login
+    </a>
 </div>
 
 </body>

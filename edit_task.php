@@ -60,8 +60,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($result) {
 
-        $success = true;
-        $message = 'Task updated successfully';
+      
+                   $success = true;
+           header('Location: index.php');
+    exit;
 
         // نجيب البيانات الجديدة
         $task = $taskModel->getById($id, $userId);

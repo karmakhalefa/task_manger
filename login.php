@@ -19,13 +19,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $result = $user->login($email, $password);
 
     $message = $result['message'];
-       // لو التسجيل نجح
+    $success = $result['success'];
+
     if ($success) {
-        header('Location: login.php');
+        header('Location: index.php');
         exit;
     }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -55,11 +55,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button type="submit">Login</button>
 
 <p>
-    Don't have an account?
+  
 </p>
 
 <a href="register.php" class="register-btn">
-    Register
+    Don't have an account?
 </a>
 
         <?php if ($message): ?>
@@ -163,21 +163,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     background: #f8d7da;
     border-radius: 7px;
 }
-.register-btn {
-    display: block;
-    width: 100%;
-    padding: 12px;
-    margin-top: 10px;
 
-    background: #222;
-    color: white;
-
-    text-align: center;
-    text-decoration: none;
-
-    border-radius: 7px;
-    font-size: 16px;
-}
 
 .register-btn:hover {
     background: #444;
