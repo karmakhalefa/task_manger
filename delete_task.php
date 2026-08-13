@@ -40,8 +40,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($result) {
 
-        $success = true;
-        $message = 'Task deleted successfully';
+             $success = true;
+           header('Location: index.php');
+    exit;
 
     } else {
 

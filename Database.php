@@ -5,7 +5,7 @@ class Database
         private static $instance;
     // بينات الاتصال 
     private $host = '127.0.0.1';
-    private $dbname = 'task manger';
+    private $dbname = 'task manger ';
     private $username = 'root';
     private $password = '';
 // هنخزن الاتصال هنا 
